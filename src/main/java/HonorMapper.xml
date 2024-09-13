@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmae.chairman.mapper.HonorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmae.chairman.entity.Honor">
+        <id column="Id" property="id" />
+        <result column="Img" property="img" />
+        <result column="Remark" property="remark" />
+        <result column="CreateTime" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        Id, Img, Remark, CreateTime
+    </sql>
+
+</mapper>
