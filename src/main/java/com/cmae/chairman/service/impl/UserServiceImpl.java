@@ -4,6 +4,7 @@ import com.cmae.chairman.entity.User;
 import com.cmae.chairman.mapper.UserMapper;
 import com.cmae.chairman.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,6 +19,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+    @Autowired
+    private UserMapper userMapper;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
@@ -28,7 +32,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    public void addUser(User user) {
+        userMapper.insert(user);
+    }
+
+    @Override
     public boolean validatePassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateById(user);
+    }
+
+
 }

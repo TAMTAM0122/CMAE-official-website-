@@ -1,7 +1,9 @@
 package com.cmae.chairman.tool;
 
+import com.cmae.chairman.service.impl.TokenServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.ServletException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -47,6 +49,9 @@ import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    @Autowired
+    private TokenServiceImpl tokenServiceImpl;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
@@ -67,7 +72,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7); // 去掉"Bearer "前缀
-            System.out.println("token:" + token);
+            // 检查 Token 是否已失效
+            if (tokenServiceImpl.isTokenBlacklisted(token)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Token 已失效");
+                return;
+            }
+
             try {
                 Claims claims = JwtTokenUtil.parseToken(token);  // 调用parseToken解析JWT
 

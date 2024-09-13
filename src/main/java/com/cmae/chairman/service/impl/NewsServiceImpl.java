@@ -40,7 +40,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
         // 过滤条件：type
         queryWrapper.eq("Type", type);
         // 根据创建时间降序排序
-        queryWrapper.orderByDesc("Createtime");
+        queryWrapper.orderByDesc("EventTime");
         // 限制返回的条数
         Page<News> page = new Page<>(1, num);
 

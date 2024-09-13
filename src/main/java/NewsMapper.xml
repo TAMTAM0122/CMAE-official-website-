@@ -10,11 +10,12 @@
         <result column="Type" property="type" />
         <result column="Content" property="content" />
         <result column="CreateTime" property="createTime" />
+        <result column="EventTime" property="eventTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        Id, Title, Img, Type, Content, CreateTime
+        Id, Title, Img, Type, Content, CreateTime, EventTime
     </sql>
 
 </mapper>

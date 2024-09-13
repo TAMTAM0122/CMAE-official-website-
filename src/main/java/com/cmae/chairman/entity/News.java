@@ -43,4 +43,7 @@ public class News implements Serializable {
 
     @TableField("CreateTime")
     private LocalDateTime createTime;
+
+    @TableField("EventTime")
+    private LocalDateTime eventTime;
 }
