@@ -1,11 +1,15 @@
 package com.cmae.chairman.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.cmae.chairman.entity.Case;
+import com.cmae.chairman.entity.News;
 import com.cmae.chairman.mapper.CaseMapper;
 import com.cmae.chairman.service.ICaseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,5 +36,12 @@ public class CaseServiceImpl extends ServiceImpl<CaseMapper, Case> implements IC
     @Override
     public Case getCase(int id) {
         return caseMapper.selectById(id);
+    }
+
+    @Override
+    public List<Case> findCasesByTitle(String title) {
+        LambdaQueryWrapper<Case> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(Case::getTitle, title);  // 模糊匹配
+        return caseMapper.selectList(queryWrapper);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,6 +23,12 @@ import java.util.List;
 public class CaseController {
     @Autowired
     private ICaseService caseService;
+
+    @PostMapping("/FindCasesByTitle")
+    public List<Case> searchCases(@RequestBody Map<String, String> queryData) {
+        String title = queryData.get("title");
+        return caseService.findCasesByTitle(title);
+    }
 
     @GetMapping("/GetCasesById/{id}")
     public Case getCasesById(@PathVariable("id") Integer id){

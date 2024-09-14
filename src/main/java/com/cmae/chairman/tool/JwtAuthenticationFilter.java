@@ -49,8 +49,12 @@ import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private TokenServiceImpl tokenServiceImpl;
+    private final TokenServiceImpl tokenServiceImpl;
+
+    // 构造函数注入 TokenServiceImpl
+    public JwtAuthenticationFilter(TokenServiceImpl tokenServiceImpl) {
+        this.tokenServiceImpl = tokenServiceImpl;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -62,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 检查是否为公共路径，如果是公共路径，跳过 JWT 验证
         if (requestPath.startsWith("/User") || requestPath.startsWith("/Case") ||
                 requestPath.startsWith("/Tool") || requestPath.startsWith("/News") ||
-        requestPath.startsWith(("/Honor"))) {
+        requestPath.startsWith(("/Honor")) || requestPath.startsWith("/Job")) {
             filterChain.doFilter(request, response);
             return; // 直接跳过JWT验证，继续执行下一个过滤器
         }

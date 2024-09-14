@@ -1,7 +1,9 @@
 package com.cmae.chairman.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cmae.chairman.entity.Job;
 import com.cmae.chairman.entity.News;
 import com.cmae.chairman.mapper.NewsMapper;
 import com.cmae.chairman.service.INewsService;
@@ -51,5 +53,12 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
     @Override
     public News getNew(int id) {
         return newsMapper.selectById(id);
+    }
+
+    @Override
+    public List<News> findNewsByTitle(String title) {
+        LambdaQueryWrapper<News> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(News::getTitle, title);  // 模糊匹配
+        return newsMapper.selectList(queryWrapper);
     }
 }

@@ -31,7 +31,7 @@ public class MysqlGenerator {
                                 .pathInfo(Collections.singletonMap(OutputFile.xml, "C://Users//chair//IdeaProjects//chairman//src//main//java")) // 设置mapperXml生成路径
                 )
                 .strategyConfig(builder -> {
-                    builder.addInclude("user");// 设置需要生成的表名
+                    builder.addInclude("job");// 设置需要生成的表名
                     // 实体策略配置
                     builder.entityBuilder().enableLombok().enableTableFieldAnnotation();
                     // Mapper 策略配置

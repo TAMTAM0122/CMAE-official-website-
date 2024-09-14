@@ -3,6 +3,8 @@ package com.cmae.chairman.service;
 import com.cmae.chairman.entity.Case;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -17,4 +19,6 @@ public interface ICaseService extends IService<Case> {
     public void updateCase(Case caseData);
 
     public Case getCase(int id);
+
+    public List<Case> findCasesByTitle(String title);
 }

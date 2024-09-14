@@ -1,6 +1,8 @@
 package com.cmae.chairman.config;
 
+import com.cmae.chairman.service.impl.TokenServiceImpl;
 import com.cmae.chairman.tool.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +22,9 @@ import java.util.Arrays;
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private TokenServiceImpl tokenServiceImpl;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -31,14 +36,19 @@ public class SecurityConfig {
                                 "/Case/**",
                                 "/Tool/**",
                                 "/News/**",
-                                "/Honor/**").permitAll()  // 允许公共路径访问
+                                "/Honor/**",
+                                "/Job/**").permitAll()  // 允许公共路径访问
                         .anyRequest().authenticated()  // 其他路径需要认证
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);  // 添加JWT验证过滤器，在UsernamePasswordAuthenticationFilter之前
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);  // 添加JWT验证过滤器，在UsernamePasswordAuthenticationFilter之前
 
         return http.build();
+    }
 
-
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        // 将 tokenServiceImpl 通过构造函数传递给 JwtAuthenticationFilter
+        return new JwtAuthenticationFilter(tokenServiceImpl);
     }
 
     @Bean

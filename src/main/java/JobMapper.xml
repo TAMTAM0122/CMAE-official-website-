@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmae.chairman.mapper.JobMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmae.chairman.entity.Job">
+        <id column="Id" property="id" />
+        <result column="Job" property="job" />
+        <result column="Type" property="type" />
+        <result column="Location" property="location" />
+        <result column="Statement" property="statement" />
+        <result column="Requirement" property="requirement" />
+        <result column="CreateTime" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        Id, Job, Type, Location, Statement, Requirement, CreatTime
+    </sql>
+
+</mapper>

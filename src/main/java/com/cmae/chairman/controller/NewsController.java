@@ -1,6 +1,5 @@
 package com.cmae.chairman.controller;
 
-import com.cmae.chairman.entity.Case;
 import com.cmae.chairman.entity.News;
 import com.cmae.chairman.service.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,6 +29,11 @@ public class NewsController {
         return newsService.getNew(id);
     }
 
+    @PostMapping("/FindNewsByTitle")
+    public List<News> searchNews(@RequestBody Map<String, String> queryData) {
+        String title = queryData.get("title");
+        return newsService.findNewsByTitle(title);
+    }
 
     @GetMapping
     public ResponseEntity<List<News>> getNews(@RequestParam("type") int type,@RequestParam("num") int num) {

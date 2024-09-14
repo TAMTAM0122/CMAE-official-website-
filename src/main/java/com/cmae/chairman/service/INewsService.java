@@ -21,4 +21,6 @@ public interface INewsService extends IService<News> {
     public List<News> getNewsByTypeAndNum(int type, int num);
 
     public News getNew(int id);
+
+    public List<News> findNewsByTitle(String title);
 }
